@@ -9,7 +9,7 @@ spec:
     - name: repo-url
     - name: branch
       default: main
-    - name: build-image  # New parameter for build-image
+    - name: build-image  # Existing parameter for build-image
   tasks:
     - name: init
       workspaces:
@@ -56,7 +56,7 @@ spec:
         value: "-v --with-spec --spec-color"
       runAfter:
         - clone
-    - name: build  # New build task
+    - name: build  # Existing build task
       workspaces:
         - name: source
           workspace: pipeline-workspace
@@ -69,3 +69,21 @@ spec:
       runAfter:
         - tests
         - lint
+    - name: deploy  # New deploy task
+      workspaces:
+        - name: manifest-dir
+          workspace: pipeline-workspace
+      taskRef:
+        name: openshift-client
+        kind: ClusterTask
+      params:
+      - name: SCRIPT
+        value: |
+          echo "Updating manifest..."
+          sed -i "s|IMAGE_NAME_HERE|$(params.build-image)|g" deploy/deployment.yaml
+          cat deploy/deployment.yaml
+          echo "Deploying to OpenShift..."
+          oc apply -f deploy/
+          oc get pods -l app=accounts
+      runAfter:
+        - build

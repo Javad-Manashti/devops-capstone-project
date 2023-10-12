@@ -18,15 +18,21 @@ spec:
         app: accounts
     spec:
       containers:
-      - image: "postgres:alpine"
+      - image: "${NAMESPACE}/postgresql:${POSTGRESQL_VERSION}"
         name: accounts
         resources: {}
+        securityContext:
+          runAsUser: 26
+          runAsGroup: 26
+          fsGroup: 26
         env:
           - name: POSTGRESQL_USER
-            value: your-username
+            value: javad
           - name: POSTGRESQL_PASSWORD
-            value: pgs3cr3t  # Change this to a secure password
+            value: laskdfiwrqwlfiosdf  # Change this to a secure password
           - name: POSTGRESQL_DATABASE
             value: testdb
+          - name: POSTGRES_HOST_AUTH_METHOD
+            value: trust 
 
 status: {}

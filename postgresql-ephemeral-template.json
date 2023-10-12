@@ -213,7 +213,7 @@
 			"name": "NAMESPACE",
 			"displayName": "Namespace",
 			"description": "The OpenShift Namespace where the ImageStream resides.",
-			"value": "openshift"
+			"value": "sn-labs-javadmanasht"
 		},
 		{
 			"name": "DATABASE_SERVICE_NAME",

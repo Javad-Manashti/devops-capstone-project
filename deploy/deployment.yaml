@@ -18,25 +18,15 @@ spec:
         app: accounts
     spec:
       containers:
-      - image: "centos/postgresql-94-centos7"
+      - image: "postgres:alpine"
         name: accounts
         resources: {}
         env:
-          - name: DATABASE_HOST
-            value: postgresql
-          - name: DATABASE_NAME
-            valueFrom:
-              secretKeyRef:
-                name: postgresql
-                key: database-name
-          - name: DATABASE_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: postgresql
-                key: database-password
-          - name: DATABASE_USER
-            valueFrom:
-              secretKeyRef:
-                name: postgresql
-                key: database-user
+          - name: POSTGRESQL_USER
+            value: your-username
+          - name: POSTGRESQL_PASSWORD
+            value: pgs3cr3t  # Change this to a secure password
+          - name: POSTGRESQL_DATABASE
+            value: testdb
+
 status: {}
